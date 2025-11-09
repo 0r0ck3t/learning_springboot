@@ -1,29 +1,44 @@
 # learning_springboot
-A repository documenting my learning journey with Spring Boot.
-This project is a hands-on exercise in building a modern REST API with Spring Boot.
+A simple Spring Boot REST API demonstrating full CRUD operations for a User entity using Spring Data JPA and an H2 in-memory database.
 
-What was accomplished:
+How to Run This Project:
+Prerequisites
+Java 21 (or newer)
 
-Project Setup: Initialized a new Maven project from start.spring.io with Spring Web, Spring Data JPA, and the H2 Database dependencies.
+Git:
 
-Basic REST Controller: Built a Controller to handle basic web requests, map a "home" page (/), and use @RequestParam to make a dynamic endpoint.
+1. Clone the Repository
+Open your terminal and clone this repository to your local machine:
+git clone https://github.com/your-username/your-repository-name.git
+cd your-repository-name
 
-JSON API: Created a DTO (Greeting.java) to automatically serialize Java objects into JSON responses.
+2. Run the Application
+This project uses the Maven Wrapper, so you don't need to install Maven. In your terminal, from the root of the project folder, run the following command to start the web server:
+./mvnw spring-boot:run
+The server will start on http://localhost:8080. Keep this terminal window open.
 
-Service Layer: Refactored the business logic into a @Service class, demonstrating Dependency Injection using @Autowired on the constructor.
+3. Test the API
+While the server is running, you must open a new, separate terminal window to send requests.
 
-Database Model: Created a User @Entity to model a database table.
+Here are the curl commands to test the full CRUD functionality:
+3.1. CREATE a new user:
+curl -X POST http://localhost:8080/users/add \
+-H "Content-Type: application/json" \
+-d '{"name":"example", "email":"example@example.com"}'
 
-Database Repository: Built a UserRepository interface extending JpaRepository to get full, free-of-charge database methods.
+3.2. READ all users:
+curl http://localhost:8080/users/all
 
-Full CRUD API: Built a UserController that implements all four CRUD operations:
+3.3 READ a single user (ID 1):
+curl http://localhost:8080/users/1
 
-CREATE: @PostMapping with @RequestBody to save new users.
+3.4. UPDATE a user (ID 1):
+curl -X PUT http://localhost:8080/users/1 \
+-H "Content-Type: application/json" \
+-d '{"name":"new example", "email":"new-email@example.com"}'
 
-READ: @GetMapping for finding all users and a @PathVariable to find one user by ID.
+3.5. DELETE a user (ID 1):
+curl -X DELETE http://localhost:8080/users/1
 
-UPDATE: @PutMapping to modify an existing user.
-
-DELETE: @DeleteMapping to remove a user by ID.
-
-Error Handling: Used ResponseEntity to return proper HTTP status codes (like 404 Not Found) from the API.
+3.6. Verify deletion (READ all):
+curl http://localhost:8080/users/all
