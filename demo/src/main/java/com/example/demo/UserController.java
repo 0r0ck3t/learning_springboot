@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*; // Import this to get all anno
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 import java.util.Optional; // Import this
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -21,7 +22,7 @@ public class UserController
     
     //create a new user
     @PostMapping("/add")
-    public User createUser(@RequestBody User newUser)
+    public User createUser(@Valid @RequestBody User newUser)
     {
         return userRepository.save(newUser); //save the new user to the database
     }
@@ -51,7 +52,7 @@ public class UserController
 
     //Update a user by id
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails)
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User userDetails)
     {
         Optional<User> optionalUser = userRepository.findById(id);
 
